@@ -18,4 +18,6 @@ public interface GBRepository {
     List<String> readAll();
 
     void saveAll(List<String> var1);
+
+    void write(List<User> users);
 }

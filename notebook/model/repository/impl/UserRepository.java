@@ -172,19 +172,22 @@ public class UserRepository implements GBRepository {
         return Optional.of(update);
     }
 
+    @Override
     public boolean delete(Long id) {
-        List<User> users = this.findAll();
-        User deleted = (User)this.findById(id).orElseThrow(() -> {
-            return new RuntimeException("User not found");
-        });
-        users.remove(deleted);
-        System.out.println(deleted);
-        System.out.println(users.size());
-        this.write(users);
+        List<User> users = findAll();
+        Optional<User> userOptional = findById(id);
+
+        if (userOptional.isPresent()) {
+            users.remove(userOptional.get());
+            write(users);
+            return true;
+        }
+
         return false;
     }
 
-    private void write(List<User> users) {
+
+    public void write(List<User> users) {
         List<String> lines = new ArrayList();
         Iterator var3 = users.iterator();
 

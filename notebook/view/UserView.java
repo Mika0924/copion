@@ -40,6 +40,19 @@ public class UserView {
                     System.out.println(this.userController.readAll());
                     break;
                 case DELETE:
+                    String userIdToDelete = prompt("Идентификатор пользователя для удаления: ");
+                    try {
+                        Long userIdLong = Long.parseLong(userIdToDelete);
+                        boolean deleted = userController.delete(userIdLong);
+                        if (deleted) {
+                            System.out.println("Пользователь успешно удален.");
+                        } else {
+                            System.out.println("Пользователь с указанным идентификатором не найден.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Некорректный формат идентификатора пользователя.");
+                    }
+                    break;
                 case UPDATE:
                     String userId = this.prompt("Enter user id: ");
                     this.userController.updateUser(userId, this.createUser());
